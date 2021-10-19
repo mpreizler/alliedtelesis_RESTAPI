@@ -20,7 +20,7 @@ import os
 import base64
 
 def switch_selection():
-    print("\nPlease ingress the IP/name of your switch with AlliedWare Plus Operating system\n\n")
+    print("\nPlease ingress the IP/name of your switch with AlliedWare Plus Operating system:")
     switch=input()
     os.system('cls')
     return(switch)
@@ -46,9 +46,9 @@ def print_info(x):
     pprint.pprint(result)
 
 def aw(name_switch):
-    print("Please enter username of the switch\n")
+    print("Please enter username of the switch:")
     user = input()
-    print("Please enter password of the switch\n")
+    print("Please enter password of the switch:")
     pwd = input()
     message = user + ":" + pwd
     message_bytes = message.encode('ascii')
@@ -61,10 +61,10 @@ def aw(name_switch):
     url2 = "https://" + name_switch + "/api/interface"
     url3 = "https://" + name_switch + "/api/interface/interfaces"
     url4 = "https://" + name_switch + "/api/interface/interfaces/vlan1"
-    print("Your switch is {} username: {} and password: {}".format(name_switch,user,pwd))
-    print("Is it correct?(Y/N)\n")
+    print("Your switch is {} username: {} password: {}".format(name_switch,user,pwd))
+    print("Is it correct?(y/n)\n")
     rta=input()
-    if rta == "N" or "n":
+    if rta == "n":
         quit()
     selection = get_option()
     print("\nYou selected option: {}\n".format(selection))
