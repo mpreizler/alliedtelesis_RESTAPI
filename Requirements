@@ -1,0 +1,9 @@
+Python3.10
+
+Libraries:
+time
+requests
+json
+pprint
+os
+base64
