@@ -19,10 +19,10 @@ import pprint
 import os
 import base64
 
+
 def switch_selection():
     print("\nPlease ingress the IP/name of your switch with AlliedWare Plus Operating system:")
     switch=input()
-    os.system('cls')
     return(switch)
 
 # headers
@@ -31,12 +31,17 @@ payload={}
 # This function allows to select different options for API REST
 
 def get_option():
-    print("\nPlease select to gather information from AlliedWare Plus Operating system\n\n")
-    print("1: View all your system status\n")
-    print("2: View interfaces\n")
-    print("3: Get interfaces details\n")
-    print("4: Get vlan1 information\n")
-    r = str(input("Your option is: "))
+    while True:
+        print("\nPlease select to gather information from AlliedWare Plus Operating system\n\n")
+        print("1: View all your system status\n")
+        print("2: View interfaces\n")
+        print("3: Get interfaces details\n")
+        print("4: Get vlan1 information\n")
+        r = str(input("Your option is: "))
+        if r!="1" and r!="2" and r!="3" and r!="4":
+            print("\nYou selected a wrong option\n")
+        else:
+            break
     return(r)
 
 # This function prints the results
@@ -45,11 +50,7 @@ def print_info(x):
     result=json.loads(x)
     pprint.pprint(result)
 
-def aw(name_switch):
-    print("Please enter username of the switch:")
-    user = input()
-    print("Please enter password of the switch:")
-    pwd = input()
+def aw(name_switch,user,pwd):
     message = user + ":" + pwd
     message_bytes = message.encode('ascii')
     base64_bytes = base64.b64encode(message_bytes)
@@ -61,11 +62,7 @@ def aw(name_switch):
     url2 = "https://" + name_switch + "/api/interface"
     url3 = "https://" + name_switch + "/api/interface/interfaces"
     url4 = "https://" + name_switch + "/api/interface/interfaces/vlan1"
-    print("Your switch is {} username: {} password: {}".format(name_switch,user,pwd))
-    print("Is it correct?(y/n)\n")
-    rta=input()
-    if rta == "n":
-        quit()
+    os.system("cls")
     selection = get_option()
     print("\nYou selected option: {}\n".format(selection))
     print("\nLooking for your selection.  Please wait...\n\n")
@@ -86,12 +83,20 @@ def aw(name_switch):
 # Entry point for program
 if __name__ == '__main__':
     answer = "n"
-    print('\033[0;36;40m"Welcome to Allied Telesis API Programmability"')
+    print("\nWelcome to Allied Telesis REST API testing")
     name_switch=switch_selection()
+    print("Please enter username of the switch:")
+    user_get = input()
+    print("Please enter password of the switch:")
+    pwd_get = input()
+    print("\nYour switch is {} username: {} password: {}".format(name_switch, user_get, pwd_get))
+    print("Is it correct?(y/n)")
+    rta = input()
+    if rta == "n":
+        quit()
     while answer == "n":
-        # clean screen from OS function
-        #os.system('clear')
-        aw(name_switch)
+        aw(name_switch,user_get,pwd_get)
         print("\nWould you like to exit from network programmability software (Press y to exit)?\n")
         answer = input()
+        os.system("cls")
     print("\nThanks for using our Allied Telesis switches with REST API\n")
